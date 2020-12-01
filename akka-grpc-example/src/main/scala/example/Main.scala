@@ -5,18 +5,11 @@ import akka.grpc.scaladsl.{ServerReflection, ServiceHandler}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import com.typesafe.config.ConfigFactory
-import example.myapp.helloworld.grpc.{GreeterService, GreeterServiceHandler, HelloReply, HelloRequest}
+import example.myapp.helloworld.grpc.{GreeterService, GreeterServiceHandler}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class GreeterServiceImpl(implicit ec: ExecutionContext) extends GreeterService {
-
-  override def sayHello(in: HelloRequest): Future[HelloReply] =
-    Future.successful(HelloReply(message = s"Hello ${in.name}"))
-
-}
-
-class GreeterServer(system: ActorSystem) {
+class Main(system: ActorSystem) {
 
   def run(): Future[Http.ServerBinding] = {
     implicit val sys: ActorSystem = system
@@ -39,12 +32,12 @@ class GreeterServer(system: ActorSystem) {
 
 }
 
-object GreeterServer {
+object Main {
 
   def main(args: Array[String]): Unit = {
     val conf = ConfigFactory.load()
     val system = ActorSystem("HelloWorld", conf)
-    new GreeterServer(system).run()
+    new Main(system).run()
   }
 
 }

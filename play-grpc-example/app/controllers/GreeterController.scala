@@ -10,10 +10,10 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 class GreeterController @Inject()(
-                               implicit greeterClient: GreeterServiceClient,
-                               cc: ControllerComponents,
-                               exec: ExecutionContext,
-                             ) extends AbstractController(cc) {
+  implicit greeterClient: GreeterServiceClient,
+  cc: ControllerComponents,
+  exec: ExecutionContext,
+) extends AbstractController(cc) {
 
   def sayHello(name: String): Action[AnyContent] = Action.async {
     greeterClient
